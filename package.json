@@ -1,0 +1,43 @@
+{
+    "name": "qnamaker-bot",
+    "version": "1.0.0",
+    "description": "Bot Builder v4 using QnA Maker service with active learning and multi-turn experience.",
+    "author": "Microsoft",
+    "license": "MIT",
+    "main": "./lib/index.js",
+    "scripts": {
+        "start": "tsc --build && node ./lib/index.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "watch": "nodemon --watch ./src -e ts --exec \"npm --node-options --inspect run start\"",
+        "build": "tsc --build",
+        "lint": "tslint -c tslint.json 'src/**/*.ts'"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Microsoft/BotBuilder-Samples.git"
+    },
+    "dependencies": {
+        "botbuilder": "4.10.3",
+        "botbuilder-ai": "4.10.3",
+        "botbuilder-dialogs": "4.10.3",
+        "bot-solutions": "^1.0.0",
+        "dotenv": "^8.2.0",
+        "restify": "~8.5.1",
+        "winston": "^3.3.3",
+        "winston-format-debug": "^1.0.3"
+    },
+    "devDependencies": {
+        "@types/dotenv": "6.1.1",
+        "@types/node": "^14.14.7",
+        "@types/restify": "8.4.2",
+        "eslint": "^6.6.0",
+        "eslint-config-standard": "^14.1.0",
+        "eslint-plugin-import": "^2.18.2",
+        "eslint-plugin-node": "^10.0.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-standard": "^4.0.1",
+        "nodemon": "~1.19.4",
+        "tslint": "~5.20.0",
+        "typescript": "~3.6.4"
+    }
+}
