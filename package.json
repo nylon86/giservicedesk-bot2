@@ -9,7 +9,7 @@
         "start": "node ./node_modules/typescript/bin/tsc --build && node ./lib/index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
         "watch": "nodemon --watch ./src -e ts --exec \"npm --node-options --inspect run start\"",
-        "build": "node ./node_modules/typescript/bin/tsc --build",
+        "build": "npm install && node ./node_modules/typescript/bin/tsc --build",
         "lint": "tslint -c tslint.json 'src/**/*.ts'"
     },
     "dependencies": {
