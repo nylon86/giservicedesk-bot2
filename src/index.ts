@@ -5,8 +5,8 @@
 
 // Import required packages
 // Import required bot services. See https://aka.ms/bot-services to learn more about the different parts of a bot.
-import { LocaleTemplateManager } from 'bot-solutions';
 import { BotFrameworkAdapter, ConversationState, MemoryStorage, TranscriptLoggerMiddleware, UserState } from 'botbuilder';
+import * as dotenv from 'dotenv';
 import * as path from 'path';
 import * as restify from 'restify';
 import * as winston from 'winston';
@@ -15,10 +15,9 @@ import { QnABot } from './bots/QnABot';
 import { RootDialog } from './dialogs/rootDialog';
 import { MyLogger } from './logger/MyLogger';
 
-
 // Note: Ensure you have a .env file and include QnAMakerKnowledgeBaseId, QnAMakerEndpointKey and QnAMakerHost.
 const ENV_FILE = path.join(__dirname, '..', '.env');
-require('dotenv').config({ path: ENV_FILE });
+dotenv.config({ path: ENV_FILE });
 export const Logger = winston.createLogger({
     transports: [
         new winston.transports.Console({
@@ -32,7 +31,6 @@ export const Logger = winston.createLogger({
     ]
 });
 // const localeTemplateManager: LocaleTemplateManager = new LocaleTemplateManager(localizedTemplates, botSettings.defaultLocale || 'it-it');
-
 
 // Create HTTP server.
 const server = restify.createServer();
@@ -81,7 +79,7 @@ const memoryStorage = new MemoryStorage();
 const conversationState = new ConversationState(memoryStorage);
 const userState = new UserState(memoryStorage);
 
-var endpointHostName = process.env.QnAEndpointHostName;
+let endpointHostName = process.env.QnAEndpointHostName;
 if (!endpointHostName.startsWith('https://')) {
     endpointHostName = 'https://' + endpointHostName;
 }
