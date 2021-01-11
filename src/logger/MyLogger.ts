@@ -1,5 +1,5 @@
-import { Activity, TranscriptLogger } from "botbuilder";
-import { Logger } from "..";
+import { Activity, TranscriptLogger } from 'botbuilder';
+import { Logger } from '../server';
 
 export class MyLogger implements TranscriptLogger {
     /**

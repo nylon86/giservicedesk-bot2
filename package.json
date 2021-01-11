@@ -1,16 +1,16 @@
 {
-    "name": "qnamaker-bot",
+    "name": "giservicedesk-bot2",
     "version": "1.0.0",
-    "description": "Bot Builder v4 using QnA Maker service with active learning and multi-turn experience.",
-    "author": "Microsoft",
+    "description": "Un bot per aiutare su zucchetti",
+    "author": "luca.vallone@enginium.eu",
     "license": "MIT",
-    "main": "./lib/index.js",
     "scripts": {
-        "start": "node ./node_modules/typescript/bin/tsc --build && node ./lib/index.js",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "watch": "nodemon --watch ./src -e ts --exec \"npm --node-options --inspect run start\"",
-        "build": "npm install && node ./node_modules/typescript/bin/tsc --build",
-        "lint": "tslint -c tslint.json 'src/**/*.ts'"
+        "start": "npm run serve",
+        "build": "npm run build-ts && npm run tslint",
+        "serve": "node dist/server.js",
+        "copy-static-assets": "ts-node copyStaticAssets.ts",
+        "build-ts": "tsc",
+        "tslint": "tslint -c tslint.json -p tsconfig.json"
     },
     "dependencies": {
         "botbuilder": "4.10.3",

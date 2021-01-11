@@ -13,7 +13,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const botbuilder_1 = require("botbuilder");
 const botbuilder_ai_1 = require("botbuilder-ai");
-const __1 = require("..");
+const server_1 = require("../server");
 /**
  * A simple bot that responds to utterances with answers from QnA Maker.
  * If an answer is not found for an utterance, the bot responds with help.
@@ -51,9 +51,9 @@ class QnABot extends botbuilder_1.ActivityHandler {
         //     includeInstanceData: true
         // }, true);
         const qnaMaker = new botbuilder_ai_1.QnAMaker({
-            knowledgeBaseId: process.env.QnAKnowledgebaseId,
             endpointKey: process.env.QnAEndpointKey,
-            host: process.env.QnAEndpointHostName
+            host: process.env.QnAEndpointHostName,
+            knowledgeBaseId: process.env.QnAKnowledgebaseId
         });
         // this.dispatchRecognizer = dispatchRecognizer;
         this.qnaMaker = qnaMaker;
@@ -67,7 +67,7 @@ class QnABot extends botbuilder_1.ActivityHandler {
             addConversationReference(context.activity);
             // Run the Dialog with the new message Activity.
             yield this.dialog.run(context, this.dialogState);
-            __1.Logger.log({ level: 'info', message: context.activity.text });
+            server_1.Logger.log({ level: 'info', message: context.activity.text });
             // By calling next() you ensure that the next BotHandler is run.
             yield next();
         }));
@@ -83,9 +83,9 @@ class QnABot extends botbuilder_1.ActivityHandler {
             yield next();
         }));
         this.onTurn((turnContext, next) => __awaiter(this, void 0, void 0, function* () {
-            __1.Logger.log({ level: 'info', message: 'INIZIO MESSAGGIO' });
-            __1.Logger.log({ level: 'info', message: turnContext.activity.text });
-            __1.Logger.log({ level: 'info', message: 'FINE MESSAGGIO' });
+            server_1.Logger.log({ level: 'info', message: 'INIZIO MESSAGGIO' });
+            server_1.Logger.log({ level: 'info', message: turnContext.activity.text });
+            server_1.Logger.log({ level: 'info', message: 'FINE MESSAGGIO' });
             yield next();
         }));
         this.onDialog((context, next) => __awaiter(this, void 0, void 0, function* () {

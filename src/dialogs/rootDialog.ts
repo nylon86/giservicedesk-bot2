@@ -1,9 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+import { StatePropertyAccessor, TurnContext } from 'botbuilder';
 import {
     ComponentDialog,
     DialogSet,
+    DialogState,
     DialogTurnStatus,
     WaterfallDialog
 } from 'botbuilder-dialogs';
@@ -21,7 +23,7 @@ export class RootDialog extends ComponentDialog {
      * Root dialog for this bot.
      * @param {QnAMaker} qnaService A QnAMaker service object.
      */
-    constructor(knowledgebaseId, authkey, host) {
+    constructor(knowledgebaseId: string, authkey: string, host: string) {
         super(ROOT_DIALOG);
         // Initial waterfall dialog.
         this.addDialog(new WaterfallDialog(INITIAL_DIALOG, [
@@ -38,7 +40,7 @@ export class RootDialog extends ComponentDialog {
      * @param {*} turnContext
      * @param {*} accessor
      */
-    async run(context, accessor) {
+    public async run(context: TurnContext, accessor: StatePropertyAccessor<DialogState>) {
         const dialogSet = new DialogSet(accessor);
         dialogSet.add(this);
 
@@ -51,7 +53,7 @@ export class RootDialog extends ComponentDialog {
 
     // This is the first step of the WaterfallDialog.
     // It kicks off the dialog with the QnA Maker with provided options.
-    async startInitialDialog(step) {
+    private async startInitialDialog(step: { beginDialog: (arg0: string) => any; }) {
 
         return await step.beginDialog(QNAMAKER_BASE_DIALOG);
     }

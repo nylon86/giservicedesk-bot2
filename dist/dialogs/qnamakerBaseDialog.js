@@ -20,9 +20,9 @@ class QnAMakerBaseDialog extends botbuilder_ai_1.QnAMakerDialog {
      */
     constructor(knowledgebaseId, authkey, host) {
         const noAnswer = {};
-        noAnswer.text = 'NESSUNA RISPOSTA';
+        noAnswer.text = 'Mi dispiace ma non conosco la risposta a questa domanda';
         // var noAnswer = DefaultNoAnswer;
-        var filters = [];
+        const filters = [];
         super(knowledgebaseId, authkey, host, noAnswer, DefaultThreshold, DefaultCardTitle, DefaultCardNoMatchText, DefaultTopN, null, filters, QNAMAKER_BASE_DIALOG);
         this.id = QNAMAKER_BASE_DIALOG;
     }

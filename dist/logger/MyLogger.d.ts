@@ -1,4 +1,4 @@
-import { Activity, TranscriptLogger } from "botbuilder";
+import { Activity, TranscriptLogger } from 'botbuilder';
 export declare class MyLogger implements TranscriptLogger {
     /**
      * Log an activity to the transcript.

@@ -10,18 +10,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+// index.js is used to setup and configure your bot
+// Import required packages
+// Import required bot services. See https://aka.ms/bot-services to learn more about the different parts of a bot.
 const botbuilder_1 = require("botbuilder");
-const path = require("path");
-const restify = require("restify");
-const winston = require("winston");
+const dotenv = __importStar(require("dotenv"));
+const path = __importStar(require("path"));
+const restify = __importStar(require("restify"));
+const winston = __importStar(require("winston"));
 const winston_format_debug_1 = require("winston-format-debug");
 const QnABot_1 = require("./bots/QnABot");
 const rootDialog_1 = require("./dialogs/rootDialog");
 const MyLogger_1 = require("./logger/MyLogger");
 // Note: Ensure you have a .env file and include QnAMakerKnowledgeBaseId, QnAMakerEndpointKey and QnAMakerHost.
 const ENV_FILE = path.join(__dirname, '..', '.env');
-require('dotenv').config({ path: ENV_FILE });
+dotenv.config({ path: ENV_FILE });
 exports.Logger = winston.createLogger({
     transports: [
         new winston.transports.Console({
@@ -34,7 +45,7 @@ exports.Logger = winston.createLogger({
 // const localeTemplateManager: LocaleTemplateManager = new LocaleTemplateManager(localizedTemplates, botSettings.defaultLocale || 'it-it');
 // Create HTTP server.
 const server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function () {
+server.listen(process.env.port || process.env.PORT || 3978, () => {
     console.log(`\n${server.name} listening to ${server.url}.`);
     console.log('\nGet Bot Framework Emulator: https://aka.ms/botframework-emulator');
     console.log('\nTo talk to your bot, open the emulator select "Open Bot"');
@@ -68,7 +79,7 @@ const memoryStorage = new botbuilder_1.MemoryStorage();
 // Create conversation and user state with in-memory storage provider.
 const conversationState = new botbuilder_1.ConversationState(memoryStorage);
 const userState = new botbuilder_1.UserState(memoryStorage);
-var endpointHostName = process.env.QnAEndpointHostName;
+let endpointHostName = process.env.QnAEndpointHostName;
 if (!endpointHostName.startsWith('https://')) {
     endpointHostName = 'https://' + endpointHostName;
 }
@@ -118,14 +129,16 @@ server.get('/api/notify', (req, res) => __awaiter(void 0, void 0, void 0, functi
 }));
 // Listen for incoming custom notifications and send proactive messages to users.
 server.post('/api/notify', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    for (var prop in req.body) {
-        var msg = req.body[prop];
-        for (const conversationReference of Object.values(conversationReferences)) {
-            yield adapter.continueConversation(conversationReference, (turnContext) => __awaiter(void 0, void 0, void 0, function* () {
-                // If you encounter permission-related errors when sending this message, see
-                // https://aka.ms/BotTrustServiceUrl
-                yield turnContext.sendActivity(msg);
-            }));
+    for (const prop in req.body) {
+        if (req.body[prop] != null) {
+            const msg = req.body[prop];
+            for (const conversationReference of Object.values(conversationReferences)) {
+                yield adapter.continueConversation(conversationReference, (turnContext) => __awaiter(void 0, void 0, void 0, function* () {
+                    // If you encounter permission-related errors when sending this message, see
+                    // https://aka.ms/BotTrustServiceUrl
+                    yield turnContext.sendActivity(msg);
+                }));
+            }
         }
     }
     res.setHeader('Content-Type', 'text/html');
@@ -133,4 +146,4 @@ server.post('/api/notify', (req, res) => __awaiter(void 0, void 0, void 0, funct
     res.write('Proactive messages have been sent.');
     res.end();
 }));
-//# sourceMappingURL=index.js.map
+//# sourceMappingURL=server.js.map

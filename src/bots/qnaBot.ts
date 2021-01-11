@@ -3,7 +3,7 @@
 
 import { ActivityHandler, TurnContext } from 'botbuilder';
 import { QnAMaker } from 'botbuilder-ai';
-import { Logger } from '..';
+import { Logger } from '../server';
 /**
  * A simple bot that responds to utterances with answers from QnA Maker.
  * If an answer is not found for an utterance, the bot responds with help.
@@ -51,9 +51,9 @@ export class QnABot extends ActivityHandler {
         // }, true);
 
         const qnaMaker = new QnAMaker({
-            knowledgeBaseId: process.env.QnAKnowledgebaseId,
             endpointKey: process.env.QnAEndpointKey,
-            host: process.env.QnAEndpointHostName
+            host: process.env.QnAEndpointHostName,
+            knowledgeBaseId: process.env.QnAKnowledgebaseId
         });
 
         // this.dispatchRecognizer = dispatchRecognizer;
@@ -103,7 +103,7 @@ export class QnABot extends ActivityHandler {
             await next();
         });
 
-        function addConversationReference(activity): void {
+        function addConversationReference(activity: any): void {
             const conversationReference = TurnContext.getConversationReference(activity);
             conversationReferences[conversationReference.conversation.id] = conversationReference;
         }

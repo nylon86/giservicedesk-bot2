@@ -34,7 +34,7 @@ export const Logger = winston.createLogger({
 
 // Create HTTP server.
 const server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function () {
+server.listen(process.env.port || process.env.PORT || 3978, () => {
     console.log(`\n${server.name} listening to ${server.url}.`);
     console.log('\nGet Bot Framework Emulator: https://aka.ms/botframework-emulator');
     console.log('\nTo talk to your bot, open the emulator select "Open Bot"');
@@ -52,7 +52,7 @@ const adapter = new BotFrameworkAdapter({
 }).use(logActivity);
 
 // Catch-all for errors.
-const onTurnErrorHandler = async (context, error) => {
+const onTurnErrorHandler = async (context: any, error: any) => {
     // This check writes out errors to console log .vs. app insights.
     // NOTE: In production environment, you should consider logging this to Azure
     //       application insights.
@@ -136,14 +136,16 @@ server.get('/api/notify', async (req, res) => {
 
 // Listen for incoming custom notifications and send proactive messages to users.
 server.post('/api/notify', async (req, res) => {
-    for (var prop in req.body) {
-        var msg = req.body[prop];
-        for (const conversationReference of Object.values(conversationReferences)) {
-            await adapter.continueConversation(conversationReference, async turnContext => {
-                // If you encounter permission-related errors when sending this message, see
-                // https://aka.ms/BotTrustServiceUrl
-                await turnContext.sendActivity(msg);
-            });
+    for (const prop in req.body) {
+        if (req.body[prop] != null) {
+            const msg = req.body[prop];
+            for (const conversationReference of Object.values(conversationReferences)) {
+                await adapter.continueConversation(conversationReference, async (turnContext) => {
+                    // If you encounter permission-related errors when sending this message, see
+                    // https://aka.ms/BotTrustServiceUrl
+                    await turnContext.sendActivity(msg);
+                });
+            }
         }
     }
     res.setHeader('Content-Type', 'text/html');
