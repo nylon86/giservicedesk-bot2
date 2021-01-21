@@ -9,7 +9,7 @@
         "build": "npm run build-ts && npm run tslint",
         "serve": "node dist/server.js",
         "copy-static-assets": "ts-node copyStaticAssets.ts",
-        "build-ts": "tsc",
+        "build-ts": "tsc --build",
         "tslint": "tslint -c tslint.json -p tsconfig.json"
     },
     "dependencies": {
