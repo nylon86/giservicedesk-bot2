@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "/subscriptions/64560cc2-0d79-4087-a77b-3881f0591e94/resourceGroups/RG-ServiceDesk-Chatbot/providers/Microsoft.Web/sites/giservicedesk-bot2",
-    "appService.deploySubpath": "."
-}
