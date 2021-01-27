@@ -16,7 +16,7 @@ export class QnABot extends ActivityHandler {
     public userState: any;
     public dialog: any;
     public dialogState: any;
-    public conversationReferences1: any;
+    // public conversationReferences1: any;
     public conversationDataAccessor: any;
     public userProfileAccessor: any;
     // public dispatchRecognizer: LuisRecognizer;
@@ -37,7 +37,7 @@ export class QnABot extends ActivityHandler {
         this.userState = userState;
         this.dialog = dialog;
         this.dialogState = conversationState.createProperty('DialogState');
-        this.conversationReferences1 = conversationReferences;
+        // this.conversationReferences1 = conversationReferences;
         this.conversationDataAccessor = conversationState.createProperty(CONVERSATION_DATA_PROPERTY);
         this.userProfileAccessor = userState.createProperty(USER_PROFILE_PROPERTY);
 
