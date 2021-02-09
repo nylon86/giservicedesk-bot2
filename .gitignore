@@ -1,6 +1,4 @@
 node_modules/
 *.js.map
-.env
 .vscode
-dist/
 lib/

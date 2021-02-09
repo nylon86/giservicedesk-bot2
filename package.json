@@ -10,7 +10,7 @@
         "serve": "node dist/server.js",
         "serve-ts": "ts-node src/server.ts",
         "copy-static-assets": "ts-node copyStaticAssets.ts",
-        "build-ts": "tsc --build",
+        "build-ts": "tsc --build --noEmit false",
         "eslint": "npx eslint --ext .ts src/",
         "watch": "nodemon ./dist/server.js NODE_ENV=development"
     },
