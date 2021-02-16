@@ -124,37 +124,22 @@ server.on('upgrade', (req, socket, head) => {
   });
 });
 
-// Listen for incoming notifications and send proactive messages to users.
-// server.get('/api/notify', async (req, res) => {
-//     for (const conversationReference of Object.values(conversationReferences)) {
-//         await adapter.continueConversation(conversationReference, async (turnContext) => {
-//             // If you encounter permission-related errors when sending this message, see
-//             // https://aka.ms/BotTrustServiceUrl
-//             await turnContext.sendActivity('CiaoCiao');
-//         });
-//     }
-//     res.setHeader('Content-Type', 'text/html');
-//     res.writeHead(200);
-//     res.write('<html><body><h1>Proactive messages have been sent.</h1></body></html>');
-//     res.end();
-// });
-
 // Listen for incoming custom notifications and send proactive messages to users.
-server.post('/api/notify', async (req, res) => {
-  for (const prop in req.body) {
-    if (req.body[prop] != null) {
-      const msg = req.body[prop];
-      for (const conversationReference of Object.values(conversationReferences)) {
-        await adapter.continueConversation(conversationReference, async (turnContext) => {
-          // If you encounter permission-related errors when sending this message, see
-          // https://aka.ms/BotTrustServiceUrl
-          await turnContext.sendActivity(msg);
-        });
-      }
-    }
-  }
-  res.setHeader('Content-Type', 'text/html');
-  res.writeHead(200);
-  res.write('Proactive messages have been sent.');
-  res.end();
-});
+// server.post('/api/notify', async (req, res) => {
+//   for (const prop in req.body) {
+//     if (req.body[prop] != null) {
+//       const msg = req.body[prop];
+//       for (const conversationReference of Object.values(conversationReferences)) {
+//         await adapter.continueConversation(conversationReference, async (turnContext) => {
+//           // If you encounter permission-related errors when sending this message, see
+//           // https://aka.ms/BotTrustServiceUrl
+//           await turnContext.sendActivity(msg);
+//         });
+//       }
+//     }
+//   }
+//   res.setHeader('Content-Type', 'text/html');
+//   res.writeHead(200);
+//   res.write('Proactive messages have been sent.');
+//   res.end();
+// });

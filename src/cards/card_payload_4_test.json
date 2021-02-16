@@ -1,0 +1,52 @@
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "type": "AdaptiveCard",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "Lista dei browser",
+            "size": "medium",
+            "weight": "bolder",
+            "wrap": true
+        },
+        {
+            "type": "TextBlock",
+            "text": "Quale browser stai utilizzando?",
+            "wrap": true
+        }
+    ],
+    "actions": [
+        {
+            "type": "Action.ShowCard",
+            "title": "Chrome",
+            "card": {
+                "type": "AdaptiveCard",
+                "body": [
+                    {
+                        "type": "TextBlock",
+                        "text": "Stai utilizzando Chrome?",
+                        "size": "medium",
+                        "wrap": true
+                    },
+                    {
+                        "type": "TextBlock",
+                        "id": "Chrome",
+                        "style": "expanded"
+                    }
+                ],
+                "actions": [
+                    {
+                        "type": "Action.OpenUrl",
+                        "title": "Clicca qui",
+                        "url": "${viewUrlChrome}"
+                    }
+                ],
+                "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                "version": "1.2"
+            },
+            "iconUrl": "${urlChrome}",
+            "style": "destructive"
+        }
+    ]
+}

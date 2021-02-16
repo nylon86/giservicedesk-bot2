@@ -1,0 +1,67 @@
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "type": "AdaptiveCard",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "Lista dei browser",
+            "size": "Medium",
+            "weight": "Bolder",
+            "wrap": true
+        },
+        {
+            "type": "TextBlock",
+            "text": "Quale browser stai utilizzando?",
+            "wrap": true
+        }
+    ],
+    "actions": [
+        {
+            "type": "Action.ShowCard",
+            "title": "Chrome",
+            "card": {
+                "type": "AdaptiveCard",
+                "body": [
+                    {
+                        "type": "TextBlock",
+                        "text": "Stai utilizzando Chrome?",
+                        "size": "Medium",
+                        "wrap": true
+                    },
+                    {
+                        "type": "TextBlock",
+                        "id": "Chrome",
+                        "style": "expanded"
+                    }
+                ],
+                "actions": [
+                    {
+                        "type": "Action.OpenUrl",
+                        "title": "Clicca qui",
+                        "url": "${viewUrlChrome}"
+                    }
+                ],
+                "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
+            },
+            "iconUrl": "${urlChrome}",
+            "style": "destructive"
+        },
+        {
+            "type": "Action.OpenUrl",
+            "title": "Chrome Link",
+            "iconUrl": "${iconChrome}",
+            "url": "151"
+        },
+        {
+            "type": "Action.Submit",
+            "title": "AZIONE BUONA",
+            "iconUrl": "${iconChrome}"
+        }
+    ],
+    "selectAction": {
+        "type": "Action.Submit",
+        "id": "143",
+        "title": "ciao"
+    }
+}

@@ -10,11 +10,13 @@
     "incremental": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "resolveJsonModule": true,
     "noImplicitAny": true,
     "baseUrl": ".",
     "paths": {}
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "./src/cards/*.json"
   ]
 }

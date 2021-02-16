@@ -1,7 +1,8 @@
-import {ActivityHandler, ActivityTypes, CardFactory, TurnContext} from 'botbuilder';
-import {QnAMaker} from 'botbuilder-ai';
-import * as ACData from 'adaptivecards-templating';
 import * as AdaptiveCards from 'adaptivecards';
+import * as ACData from 'adaptivecards-templating';
+import {ActivityHandler, ActivityTypes, CardFactory, TurnContext} from 'botbuilder';
+import {QnAMaker, QnAMakerResult} from 'botbuilder-ai';
+import * as BrowserCard from '../cards/card_payload_4_test.json';
 // import {Logger} from '../server';
 /**
  * A simple bot that responds to utterances with answers from QnA Maker.
@@ -9,6 +10,7 @@ import * as AdaptiveCards from 'adaptivecards';
  */
 const CONVERSATION_DATA_PROPERTY = 'conversationData';
 const USER_PROFILE_PROPERTY = 'userProfile';
+// const BrowserCard = require('../cards/card_payload_4.json');
 
 export class QnABot extends ActivityHandler {
     public conversationState: any;
@@ -58,7 +60,7 @@ export class QnABot extends ActivityHandler {
 
       // this.dispatchRecognizer = dispatchRecognizer;
       this.qnaMaker = qnaMaker;
-
+      // console.log(qnaMaker);
       this.onMessage(async (context, next) => {
         // Logger.log({ level: 'info', message: context.activity.text });
         console.log('Running dialog with Message Activity.');
@@ -66,13 +68,10 @@ export class QnABot extends ActivityHandler {
         // const conversationData = await this.conversationDataAccessor.get(
         // context, {promptedForUserName: false},
         // );
-        // Logger.log({ level: 'info', message: conversationData });
-        // Logger.log({ level: 'info', message: userProfile });
         addConversationReference(context.activity);
         // Run the Dialog with the new message Activity.
         await this.dialog.run(context, this.dialogState);
-        // const a: Activity = context.activity;
-        // console.log('new log prova: ' + JSON.stringify(a));
+
         // By calling next() you ensure that the next BotHandler is run.
         await next();
       });
@@ -84,7 +83,6 @@ export class QnABot extends ActivityHandler {
             await context.sendActivity('Benvenuto nel servizio di assistenza del portale Zucchetti');
           }
         }
-
         // By calling next() you ensure that the next BotHandler is run.
         await next();
       });
@@ -92,37 +90,20 @@ export class QnABot extends ActivityHandler {
       this.onTurn(async (turnContext, next) => {
         if (turnContext.activity.type === ActivityTypes.Message) {
           const results = await this.qnaMaker.getAnswers(turnContext);
-          // console.log('eccola!! -> '+ JSON.stringify(results));
-          console.log('eccola!!   -> '+ results[0].answer);
-          const templatePayload = {
-            'type': 'AdaptiveCard',
-            'version': '1.0',
-            'body': [
-              {
-                'type': 'TextBlock',
-                'text': 'Hello ${name}!',
-              },
-            ],
-          };
-          const template = new ACData.Template(templatePayload);
-          // Expand the template with your `$root` data object.
-          // This binds it to the data and produces the final Adaptive Card payload
-          const cardPayload = template.expand({
-            $root: {
-              name: results[0].answer,
-            },
-          });
-
-          // OPTIONAL: Render the card (requires that the adaptivecards library be loaded)
-          const adaptiveCard = new AdaptiveCards.AdaptiveCard();
-          adaptiveCard.parse(cardPayload);
-          await turnContext.sendActivity({
-            text: 'Hero Card',
-            attachments: [CardFactory.adaptiveCard(adaptiveCard)],
-          });
-          return;
+          console.log('eccola!! -> ' + JSON.stringify(results));
+          if (!results || results.length == 0) {
+            await turnContext.sendActivity('Non lo so');
+          } else if (this.checkIsCardAnswer(results)) {
+            await turnContext.sendActivity({
+              // text: 'Hero Card',
+              attachments: [CardFactory.adaptiveCard(this.associaCard(results))],
+            });
+          } else {
+            await next();
+          }
+        } else {
+          await next();
         }
-        await next();
       });
 
       this.onDialog(async (context, next) => {
@@ -137,6 +118,26 @@ export class QnABot extends ActivityHandler {
         const conversationReference = TurnContext.getConversationReference(activity);
         conversationReferences[conversationReference.conversation.id] = conversationReference;
       }
+    }
+
+    private checkIsCardAnswer(results: QnAMakerResult[]) :boolean {
+      return results[0].metadata[0]?.value == 'browser';
+    }
+    private associaCard(results: QnAMakerResult[]): AdaptiveCards.AdaptiveCard {
+      const templatePayload = BrowserCard;
+      const template = new ACData.Template(templatePayload);
+      // Expand the template with your `$root` data object.
+      // This binds it to the data and produces the final Adaptive Card payload
+      const cardPayload = template.expand({
+        $root: {
+          name: results[0].answer,
+        },
+      });
+
+      // OPTIONAL: Render the card (requires that the adaptivecards library be loaded)
+      const adaptiveCard = new AdaptiveCards.AdaptiveCard();
+      adaptiveCard.parse(cardPayload);
+      return adaptiveCard;
     }
 }
 
