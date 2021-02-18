@@ -2,7 +2,7 @@ import * as AdaptiveCards from 'adaptivecards';
 import * as ACData from 'adaptivecards-templating';
 import {ActivityHandler, ActivityTypes, CardFactory, TurnContext} from 'botbuilder';
 import {QnAMaker, QnAMakerResult} from 'botbuilder-ai';
-import * as BrowserCard from '../cards/card_payload_4_test.json';
+import * as BrowserCard from '../cards/card_browser.json';
 // import {Logger} from '../server';
 /**
  * A simple bot that responds to utterances with answers from QnA Maker.
@@ -10,7 +10,6 @@ import * as BrowserCard from '../cards/card_payload_4_test.json';
  */
 const CONVERSATION_DATA_PROPERTY = 'conversationData';
 const USER_PROFILE_PROPERTY = 'userProfile';
-// const BrowserCard = require('../cards/card_payload_4.json');
 
 export class QnABot extends ActivityHandler {
     public conversationState: any;
@@ -124,17 +123,16 @@ export class QnABot extends ActivityHandler {
       return results[0].metadata[0]?.value == 'browser';
     }
     private associaCard(results: QnAMakerResult[]): AdaptiveCards.AdaptiveCard {
-      const templatePayload = BrowserCard;
-      const template = new ACData.Template(templatePayload);
-      // Expand the template with your `$root` data object.
-      // This binds it to the data and produces the final Adaptive Card payload
-      const cardPayload = template.expand({
-        $root: {
-          name: results[0].answer,
-        },
-      });
-
-      // OPTIONAL: Render the card (requires that the adaptivecards library be loaded)
+      const template = new ACData.Template(BrowserCard);
+      const context: ACData.IEvaluationContext = {
+        $root:
+        JSON.parse(results[0].answer),
+      };
+      // console.log('################# MODEL #####################');
+      // console.log(context);
+      const cardPayload = template.expand(context);
+      // console.log('################# CARD PAYLOAD #####################');
+      // console.log(cardPayload.body[2].images);
       const adaptiveCard = new AdaptiveCards.AdaptiveCard();
       adaptiveCard.parse(cardPayload);
       return adaptiveCard;
