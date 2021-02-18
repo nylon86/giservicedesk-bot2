@@ -1,0 +1,44 @@
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "type": "AdaptiveCard",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "Lista dei browser",
+            "size": "Medium",
+            "weight": "Bolder",
+            "wrap": true
+        },
+        {
+            "type": "TextBlock",
+            "text": "Quale browser stai utilizzando?",
+            "wrap": true
+        },
+        {
+            "type": "ImageSet",
+            "images": [
+                {
+                    "type": "Image",
+                    "size": "Medium",
+                    "url": "${$root.iconChrome}"
+                },
+                {
+                    "type": "Image",
+                    "size": "Medium",
+                    "url": "${$root.iconFirefox}"
+                },
+                {
+                    "type": "Image",
+                    "size": "Medium",
+                    "url": "${$root.iconExplorer}"
+                },
+                {
+                    "type": "Image",
+                    "size": "Medium",
+                    "url": "${$root.iconEdge}"
+                }
+            ]
+        }
+    ]
+}

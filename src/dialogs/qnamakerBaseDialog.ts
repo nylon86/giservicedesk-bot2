@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import { Activity } from 'botbuilder';
-import { QnAMakerDialog } from 'botbuilder-ai';
+import {Activity} from 'botbuilder';
+import {QnAMakerDialog} from 'botbuilder-ai';
 
 // Default parameters
 const DefaultThreshold = 0.3;
@@ -14,25 +14,29 @@ const DefaultCardTitle = 'Did you mean:';
 const DefaultCardNoMatchText = 'None of the above.';
 const DefaultCardNoMatchResponse = 'Thanks for the feedback.';
 
-/// QnA Maker dialog.
+// / QnA Maker dialog.
 const QNAMAKER_BASE_DIALOG = 'qnamaker-base-dailog';
-
+/**
+ * Componente che gestisce il dialogo con QNA
+ */
 export class QnAMakerBaseDialog extends QnAMakerDialog {
-    /**
+  /**
      * Core logic of QnA Maker dialog.
-     * @param {QnAMaker} qnaService A QnAMaker service object.
+     * Costruttore con parametri della qna
+     * @param {any} knowledgebaseId
+     * @param {any} authkey
+     * @param {any} host
      */
-
-    constructor(knowledgebaseId: any, authkey: any, host: any) {
-        const noAnswer: Partial<Activity> = {};
-        noAnswer.text = 'Mi dispiace ma non conosco la risposta a questa domanda';
-        // var noAnswer = DefaultNoAnswer;
-        const filters: any = [];
-        super(knowledgebaseId, authkey, host, noAnswer as Activity, DefaultThreshold, DefaultCardTitle, DefaultCardNoMatchText,
-            DefaultTopN, null, filters, QNAMAKER_BASE_DIALOG);
-        this.id = QNAMAKER_BASE_DIALOG;
-    }
-
+  constructor(knowledgebaseId: any, authkey: any, host: any) {
+    const noAnswer: Partial<Activity> = {};
+    noAnswer.text = 'Mi dispiace ma non conosco la risposta a questa domanda';
+    // var noAnswer = DefaultNoAnswer;
+    const filters: any = [];
+    super(knowledgebaseId, authkey, host, noAnswer as Activity,
+        DefaultThreshold, DefaultCardTitle, DefaultCardNoMatchText,
+        DefaultTopN, null, filters, QNAMAKER_BASE_DIALOG);
+    this.id = QNAMAKER_BASE_DIALOG;
+  }
 }
 
 module.exports.QnAMakerBaseDialog = QnAMakerBaseDialog;
