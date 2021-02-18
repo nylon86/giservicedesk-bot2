@@ -14,54 +14,51 @@
             "type": "TextBlock",
             "text": "Quale browser stai utilizzando?",
             "wrap": true
-        }
-    ],
-    "actions": [
-        {
-            "type": "Action.ShowCard",
-            "title": "Chrome",
-            "card": {
-                "type": "AdaptiveCard",
-                "body": [
-                    {
-                        "type": "TextBlock",
-                        "text": "Stai utilizzando Chrome?",
-                        "size": "Medium",
-                        "wrap": true
-                    },
-                    {
-                        "type": "TextBlock",
-                        "id": "Chrome",
-                        "style": "expanded"
-                    }
-                ],
-                "actions": [
-                    {
-                        "type": "Action.OpenUrl",
-                        "title": "Clicca qui",
-                        "url": "${viewUrlChrome}"
-                    }
-                ],
-                "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
-            },
-            "iconUrl": "${urlChrome}",
-            "style": "destructive"
         },
         {
-            "type": "Action.OpenUrl",
-            "title": "Chrome Link",
-            "iconUrl": "${iconChrome}",
-            "url": "151"
-        },
-        {
-            "type": "Action.Submit",
-            "title": "AZIONE BUONA",
-            "iconUrl": "${iconChrome}"
+            "type": "ImageSet",
+            "images": [
+                {
+                    "type": "Image",
+                    "size": "Medium",
+                    "url": "${$root.iconChrome}",
+                    "selectAction": {
+                        "type": "Action.Submit",
+                        "title": "Chrome",
+                        "data": "Chrome v2.0"
+                    }
+                },
+                {
+                    "type": "Image",
+                    "size": "Medium",
+                    "url": "${$root.iconFirefox}",
+                    "selectAction": {
+                        "type": "Action.Submit",
+                        "title": "Firefox",
+                        "data": "Firefox v2.0"
+                    }
+                },
+                {
+                    "type": "Image",
+                    "size": "Medium",
+                    "url": "${$root.iconExplorer}",
+                    "selectAction": {
+                        "type": "Action.Submit",
+                        "title": "Internet Explorer",
+                        "data": "Internet Explorer v2.0"
+                    }
+                },
+                {
+                    "type": "Image",
+                    "size": "Medium",
+                    "url": "${$root.iconEdge}",
+                    "selectAction": {
+                        "type": "Action.Submit",
+                        "title": "Microsoft Edge",
+                        "data": "Microsoft Edge v2.0"
+                    }
+                }
+            ]
         }
-    ],
-    "selectAction": {
-        "type": "Action.Submit",
-        "id": "143",
-        "title": "ciao"
-    }
+    ]
 }

@@ -5,15 +5,17 @@
     "author": "luca.vallone@enginium.eu",
     "license": "MIT",
     "scripts": {
-        "start": "npm run build && npm run serve",
-        "build": "npm run eslint && npm run build-ts",
+        "start": "node dist/server.js",
+        "build": "node ./node_modules/typescript/bin/tsc --build",
+        "start-dev": "npm run build-dev && npm run serve",
+        "build-dev": "npm run eslint && npm run build-ts",
         "serve": "node dist/server.js",
         "serve-ts": "ts-node src/server.ts",
         "copy-static-assets": "ts-node copyStaticAssets.ts",
         "build-ts": "tsc --build",
         "eslint": "npx eslint --ext .ts src/",
         "watch": "nodemon"
-    },
+    }, 
     "dependencies": {
         "adaptivecards": "^2.6.0",
         "adaptivecards-templating": "^1.4.0",
@@ -24,7 +26,8 @@
         "dotenv": "^8.2.0",
         "restify": "~8.5.1",
         "winston": "^3.3.3",
-        "winston-format-debug": "^1.0.3"
+        "winston-format-debug": "^1.0.3",
+        "typescript": "^3.6.5"
     },
     "devDependencies": {
         "@types/dotenv": "6.1.1",
@@ -37,7 +40,6 @@
         "eslint-config-google": "^0.14.0",
         "eslint-plugin-import": "^2.22.1",
         "nodemon": "~1.19.4",
-        "ts-node": "^9.1.1",
-        "typescript": "^3.6.5"
+        "ts-node": "^9.1.1"
     }
 }

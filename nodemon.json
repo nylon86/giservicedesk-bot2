@@ -7,6 +7,6 @@
     "watch": [
         "src"
     ],
-    "exec": "npm --inspect start",
+    "exec": "npm --inspect run start-dev",
     "ext": "ts"
 }
